@@ -1734,7 +1734,45 @@ header {
     </div>
 </div>
 <style>
-  /* FULLSCREEN OVERLAY */
+  .about-features {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    /* full width */
+    width: 100%;
+    margin-top: 15px;
+}
+
+.feature {
+    flex: 1;                /* each feature fills equal space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* ensures images scale inside this box */
+    max-height: 150rem;      /* adjust if needed */
+}
+
+.feature img {
+    width: 90%;            /* takes full width of the box */
+    height: 90%;           /* takes full height of the box */
+    object-fit: cover;     
+    border-radius: 10px;
+}
+
+
+.splash-content {
+    background: #fff;
+    justify-content: center;
+    /* padding: 25px; */
+    width: 60%;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    animation: dropIn 0.5s ease-out;
+}
 #splash {
     position: fixed;
     top: 0;
@@ -1750,24 +1788,16 @@ header {
     animation: fadeIn 0.6s ease-out;
 }
 
-/* Container */
-.splash-content {
-    background: #fff;
-    padding: 25px;
-    width: 40%;
-    border-radius: 16px;
-    text-align: center;
-    box-shadow: 0 0 30px rgba(0,0,0,0.4);
-    animation: dropIn 0.5s ease-out;
-}
 
 /* Ad box */
 .ad-box {
     margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 .ad-img {
-    width: 100%;
+    height: 100%;
     border-radius: 10px;
 }
 
