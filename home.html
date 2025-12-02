@@ -1562,6 +1562,223 @@ header {
     </div>
 </footer>
 
+<!-- Start of Christmass Decorations -->
+ <!-- SPLASH SCREEN -->
+<div id="splash">
+    <div class="splash-content">
+        
+        <!-- AD AREA -->
+        <div class="ad-box">
+            <!-- Replace this with your own ad (image, video, banner, etc.) -->
+            <h1 data-i18n="ad-title">X-mas is here!</h1>
+            <h1 data-i18n="ad-title2">X-mas is here!</h1>
+            <div class="about-features">
+                <div class="feature">
+                    <img src="images/x-mas/offer-kit.jpg" alt="Quality">
+                </div>
+
+                <div class="feature">
+                    <img src="images/x-mas/offer-ad.jpg" alt="Custom design">
+                </div>
+              </div>
+          </div>
+        <h2 data-i18n="ad-text">X-mass offers are here! Get in touch to learn more!</h2>
+        <h3 data-i18n="ad-text2">X-mass offers are here! Get in touch to learn more!</h3>
+        <button id="closeSplash" data-i18n="closeSplash">Continue</button>
+      </div>
+
+        <!-- Close button -->
+        
+    </div>
+</div>
+<style>
+  /* FULLSCREEN OVERLAY */
+#splash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 20, 40, 0.95);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Container */
+.splash-content {
+    background: #fff;
+    padding: 25px;
+    width: 40%;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    animation: dropIn 0.5s ease-out;
+}
+
+/* Ad box */
+.ad-box {
+    margin-bottom: 20px;
+}
+
+.ad-img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.ad-text {
+    font-size: 14px;
+    color: #444;
+    margin-top: 8px;
+}
+.ad-title {
+    font-size: 28px;
+    color: #444;
+    margin-top: 8px;
+}
+
+/* Close button */
+#closeSplash {
+    margin: 20px;
+    padding: 10px 20px;
+    background: #df2020;
+    border: none;
+    color: white;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#closeSplash:hover {
+    background: #6b1616;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; } 
+    to { opacity: 1; }
+}
+
+@keyframes dropIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+</style>
+ <script>
+// Auto-close after 5 seconds (change time if needed)
+let autoCloseTime = 5000; 
+
+let splash = document.getElementById("splash");
+let closeBtn = document.getElementById("closeSplash");
+
+let timer = setTimeout(() => {
+    splash.style.display = "none";
+}, autoCloseTime);
+
+// Manual close
+closeBtn.onclick = () => {
+    clearTimeout(timer);
+    splash.style.display = "none";
+};
+</script>
+
+
+<canvas id="snow-canvas"></canvas>
+<script>
+const canvas = document.getElementById("snow-canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.style.position = "fixed";
+canvas.style.top = "0";
+canvas.style.left = "0";
+canvas.style.pointerEvents = "none";
+canvas.style.zIndex = "9999";
+
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resize();
+window.onresize = resize;
+
+// Load snowflake icons (you can add more)
+const snowflakeImages = [
+    "images/x-mas/snowflake.png",   // replace with your icon
+    //"snowflake2.png", // optional: add more images
+    //"snowflake3.png"
+].map(src => {
+    const img = new Image();
+    img.src = src;
+    return img;
+});
+
+// Generate flakes
+let flakes = [];
+for (let i = 0; i < 120; i++) {
+    flakes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 8 + 8,      // size of icon
+        d: Math.random() + 1,
+        rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() * 0.6) - 0.3,
+        img: snowflakeImages[Math.floor(Math.random() * snowflakeImages.length)]
+    });
+}
+
+function drawSnowflakeIcon(flake) {
+    const { x, y, r, rotation, img } = flake;
+
+    const half = r / 2;
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rotation * Math.PI / 180);
+
+    // draw centered
+    ctx.drawImage(img, -half, -half, r, r);
+
+    ctx.restore();
+}
+
+function drawSnow() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let f of flakes) {
+        if (f.img.complete) {
+            drawSnowflakeIcon(f);
+        }
+    }
+
+    updateSnow();
+}
+
+let angle = 0;
+
+function updateSnow() {
+    angle += 0.01;
+
+    for (let f of flakes) {
+        f.y += Math.pow(f.d, 2) + 0.5;
+        f.x += Math.sin(angle) * 0.7;
+
+        f.rotation += f.rotationSpeed;
+
+        if (f.y > canvas.height) {
+            f.y = -10;
+            f.x = Math.random() * canvas.width;
+        }
+    }
+}
+
+setInterval(drawSnow, 25);
+</script>
+<!-- End of Christmass Decorations -->
+
 <!-- EmailJS Script -->
  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
@@ -1786,7 +2003,12 @@ header {
                 'fancy-btn-call-placeholder':   '📞 Call Us',
                 'fancy-btn-msg-placeholder':    '💬 Message Us',
                 'visitus-title':                'Visit us',
-                'visitus-p1':                   'Every day from 09.30 till 20.00 (GMT+2) you can find us at Minoos Avenue 79, Heraklion, Crete, 713 04'
+                'visitus-p1':                   'Every day from 09.30 till 20.00 (GMT+2) you can find us at Minoos Avenue 79, Heraklion, Crete, 713 04',
+                'ad-title':                     '🎅Ho-ho-ho!',
+                'ad-title2':                    'X-mas is coming soon! 🎁',
+                'ad-text':                      'X-mas Offers just arrived!',
+                'ad-text2':                     'Design beautiful arrangements with fresh flowers! Let\'s bloom it up! Reach out to learn more!',
+                'closeSplash':                  'Continue'
             },
             el: {
                 'brand':                        'Πελάνθια',
@@ -1880,7 +2102,12 @@ header {
                 'fancy-btn-call-placeholder':   '📞 Καλέστε μας',
                 'fancy-btn-msg-placeholder':    '💬 Στείλτε μας',
                 'visitus-title':                'Επισκεφθείτε μας',
-                'visitus-p1':                   'Καθημερινά από τις 09.30 έως τις 20.00 (GMT+2) σας περιμένουμε στην Λεωφόρο Μίνωος 79, Ηράκλειο Κρήτης, 713 04'
+                'visitus-p1':                   'Καθημερινά από τις 09.30 έως τις 20.00 (GMT+2) σας περιμένουμε στην Λεωφόρο Μίνωος 79, Ηράκλειο Κρήτης, 713 04',
+                'ad-title':                     '🎅Ho-ho-ho!',
+                'ad-title2':                    'Έρχονται Χριστούγεννα! 🎁',
+                'ad-text':                      'Οι Χριστουγεννιάτικες προσφορές μόλις έφτασαν!',
+                'ad-text2':                     'Φτιάξτε την δική σας κατασκευή με φρέσκα άνθη και διάφορα αξεσουάρ!Επικοινωνήστε μαζί μας για να μάθετε περισσότερα!',
+                'closeSplash':                  'Συνέχεια'
         }
         };
 
