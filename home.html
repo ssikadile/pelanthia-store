@@ -814,6 +814,9 @@
   .nav-menu a {
     font-size: 0.9rem;
   }
+  .fancy-btn {
+    font-size: clamp(0.85rem, 4vw, 1.3rem);
+  }
 }
 
 /* Animation for dropdown */
@@ -829,22 +832,6 @@
 }
 
 /* === Fixed Header === */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: #fff;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  z-index: 1000;
-}
-
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 5%;
-}
 
 /* === Logo === */
 .logo img {
@@ -975,6 +962,79 @@ header {
   justify-content: space-between;
   padding: 0.8rem 5%;
 }
+/* === LARGE SCREENS HEADER ALIGNMENT FIX === */
+
+/* 1024px and above */
+@media (min-width: 1024px) {
+    .header-container {
+        justify-content: center !important;
+        padding: 0.8rem 5%;
+    }
+
+    /* center the nav itself */
+    .nav-menu {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center;
+        padding: 0.8rem 5%;
+        gap: 3rem;                 /* adjust spacing */
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+        width: auto !important;
+    }
+
+    /* prevent li from collapsing */
+    .nav-menu li {
+        white-space: nowrap !important;
+    }
+
+    /* keep lang-switcher to the right */
+    .header-right {
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* keep logo on the left */
+    .header-left {
+        position: absolute;
+        left: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .lang-switcher {
+        right: 60px !important;  /* push EN/EL further right */
+        margin-top: -20px;
+    }
+}
+
+/* 1440px and above */
+@media (min-width: 1440px) {
+    .nav-menu {
+        padding-left: 2% !important;  /* move header-left more left */
+        padding-right: 16% !important; /* keep balanced */
+    }
+
+    .lang-switcher {
+        right: 60px !important;  /* push EN/EL further right */
+    }
+}
+
+/* 2560px (4K monitors) */
+@media (min-width: 2560px) {
+    .nav-menu {
+        padding-left: 10% !important;  /* further left shift */
+        padding-right: 10% !important;
+    }
+
+    .lang-switcher {
+        right: 90px !important; /* right-shift for huge screens */
+        transform: none !important;
+    }
+}
+
 
 /* LOGO */
 .logo img {
@@ -1080,6 +1140,39 @@ header {
   }
 }
 
+  /* --- FIX: Move language switcher left so it does not overlap burger menu --- */
+/* .lang-switcher {
+        position: fixed !important;
+        top: 10px !important;
+        left: 50% !important;
+        right: auto !important;  
+        transform: translateX(-50%) !important;;
+        z-index: 3000 !important; 
+    } */
+@media (max-width: 426px) {
+  .lang-switcher {
+        position: fixed !important;
+        top: 10px !important;
+
+        left: 50% !important;    
+        right: auto !important;  
+        transform: translateX(-50%) !important;
+
+        z-index: 3000 !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .lang-switcher {
+        right: 65px !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .lang-switcher {
+        right: 55px !important;
+    }
+} 
 /* Small mobiles */
 @media (max-width: 480px) {
   .logo img {
@@ -1160,9 +1253,17 @@ header {
   display: flex;
   gap: 15px;
   justify-content: center;
+  align-items: center;
   /* margin-top: 20px; */
   margin-bottom: 50px; /* lifts the buttons from the bottom */
+}
 
+.fancy-btn {
+  font-size: clamp(0.9rem, 2.8vw, 1.8rem);
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis (...) if the text overflows */
+  display: inline-block;
 }
 
 
@@ -1233,28 +1334,31 @@ header {
 <body>
     <!-- Navigation -->
     <header>
+  <nav class="header-container">
 
-  <nav class="nav-menu">
-    <div class="header-left"><img src="images/logo.png" alt="logo" loading="lazy"></div> 
-    
+    <div class="header-left">
+      <img src="images/logo.png" alt="logo" loading="lazy">
+    </div>
+
+    <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+
     <div class="header-right">
       <div class="lang-switcher">
         <button class="lang-btn active" data-lang="en">EN</button>
         <button class="lang-btn" data-lang="el">ΕΛ</button>
       </div>
-
-      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
     </div>
-    
-    <ul>
+
+    <ul class="nav-menu">
       <li><a href="home.html" data-i18n="nav-home">Home</a></li>
       <li><a href="gallery.html" data-i18n="nav-gallery">Gallery</a></li>
       <li><a href="about.html" data-i18n="nav-about">About</a></li>
       <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
     </ul>
+
   </nav>
-  
 </header>
+
 
 
     <!-- Hero Section -->
@@ -1457,7 +1561,6 @@ header {
 
     <!-- About Section -->
     <section id="about" class="about">
-        <h2 class="section-title" data-i18n="about-title">About Pelanthia</h2>
         <div class="about-content">
             <p data-i18n="about-p1">Welcome to Pelanthia, where luxury meets nature. For over a decade, we've been crafting exceptional floral arrangements that transform ordinary moments into extraordinary memories.</p>
             <p data-i18n="about-p2">Our passionate team of florists combines artistry with expertise to create bespoke designs tailored to your unique vision. From intimate gatherings to grand celebrations, we bring elegance and sophistication to every occasion.</p>
@@ -1562,7 +1665,8 @@ header {
     </div>
 </footer>
 
-<!-- Start of Christmass Decorations --><div class="tree">
+<!-- Start of Christmass Decorations -->
+ <!-- <div class="tree">
  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 131 140">
   <path d="m49.35 6.37-1.88-.93-1.85 1.01.32-2.07-1.54-1.43 2.08-.34.9-1.9.96 1.86 2.1.25-1.48 1.5z" style="--no:100;fill:#d8e540;stroke:#d8e540;"/>
   <path d="m129.54 125.15-.82-.26-.68.53-.01-.86-.71-.48.81-.28.23-.83.52.7.86-.04-.5.7z" style="--no: 1; transform: scale(222);"/>
@@ -1666,7 +1770,31 @@ header {
     animation: float 4s ease-in-out infinite;
     filter: drop-shadow(0 0 10px #00ffbf);
 }
+/* --- FIX CHRISTMAS TREE OVERLAY ON SMALL SCREENS --- */
+.tree {
+    position: fixed;
+    top: 10px;       /* move to bottom of screen */
+    left: 10px;        /* move to bottom-right corner */
+    z-index: 10;        /* BELOW the header but above content */
+    width: 120px;       /* scale tree for desktop */
+    pointer-events: none; /* so it never blocks clicking */
+}
 
+/* Mobile screens */
+@media (max-width: 768px) {
+    .tree {
+        width: 80px;     /* smaller tree for phones */
+        top: 5px;
+        left: 5px;
+    }
+}
+
+/* Tiny screens */
+@media (max-width: 480px) {
+    .tree {
+        width: 60px;
+    }
+}
 /* SVG auto-resizes */
 .tree svg {
     width: 100%;
@@ -1704,7 +1832,7 @@ header {
     50%  { transform: translateY(-5px); }
     100% { transform: translateY(0px); }
 }
- </style>
+ </style> -->
  <!-- SPLASH SCREEN -->
 <div id="splash">
     <div class="splash-content">
@@ -1734,46 +1862,82 @@ header {
     </div>
 </div>
 <style>
+  .about {
+      padding: 5rem 5%;
+      background: linear-gradient(135deg, var(--light-bg) 0%, #ffffff 100%);
+  }
+
+  .about-content {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+  }
+
+  .about-content p {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+  }
+
   .about-features {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+  }
 
-    /* full width */
-    width: 100%;
-    margin-top: 15px;
-}
+  .feature {
+      padding: 2rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px var(--shadow);
+      transition: all 0.3s;
+  }
 
-.features {
-    flex: 1;                /* each feature fills equal space */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+  }
 
-    /* ensures images scale inside this box */
-    max-height: 150rem;      /* adjust if needed */
-}
+  .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      animation: float 3s ease-in-out infinite;
+  }
 
-.features img {
-    width: 90%;            /* takes full width of the box */
-    height: 90%;           /* takes full height of the box */
-    object-fit: cover;     
-    border-radius: 10px;
-}
+  .feature:nth-child(2) .feature-icon {
+      animation-delay: 0.5s;
+  }
+
+  .feature:nth-child(3) .feature-icon {
+      animation-delay: 1s;
+  }
+
+  @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+  }
+
+  .feature h3 {
+      color: var(--gold);
+      margin-bottom: 1rem;
+  }
 
 
 .splash-content {
     background: #fff;
     justify-content: center;
-    /* padding: 25px; */
+    padding: 25px;
     width: 60%;
+    max-width: 600px; /* Limit max width */
     border-radius: 16px;
     text-align: center;
-    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
     animation: dropIn 0.5s ease-out;
-}
-#splash {
+  }
+
+  #splash {
     position: fixed;
     top: 0;
     left: 0;
@@ -1786,34 +1950,35 @@ header {
     align-items: center;
     z-index: 999999;
     animation: fadeIn 0.6s ease-out;
-}
+  }
 
-
-/* Ad box */
-.ad-box {
+  .ad-box {
     margin-bottom: 20px;
     justify-content: center;
     align-items: center;
-}
+  }
 
-.ad-img {
-    height: 100%;
-    border-radius: 10px;
-}
-
-.ad-text {
-    font-size: 14px;
-    color: #444;
-    margin-top: 8px;
-}
-.ad-title {
+  .ad-title {
     font-size: 28px;
     color: #444;
     margin-top: 8px;
-}
+  }
 
-/* Close button */
-#closeSplash {
+  .about-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .features img {
+    width: 100%;
+    max-width: 300px; /* Make sure images don’t stretch too wide */
+    border-radius: 10px;
+  }
+
+  /* Close button */
+  #closeSplash {
     margin: 20px;
     padding: 10px 20px;
     background: #df2020;
@@ -1823,38 +1988,84 @@ header {
     border-radius: 8px;
     cursor: pointer;
     transition: 0.2s;
-}
+  }
 
-#closeSplash:hover {
+  #closeSplash:hover {
     background: #6b1616;
-}
+  }
 
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; } 
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; }
     to { opacity: 1; }
-}
+  }
 
-@keyframes dropIn {
+  @keyframes dropIn {
     from { transform: translateY(-30px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
-}
+  }
+
+  /* Media queries for smaller screens */
+  @media (max-width: 768px) {
+    .splash-content {
+      width: 80%; /* Make splash content take up more width */
+      padding: 20px;
+    }
+
+    .about-features {
+      grid-template-columns: 1fr; /* Stack the images on smaller screens */
+      gap: 1rem;
+    }
+
+    .ad-title {
+      font-size: 24px; /* Slightly smaller text on small screens */
+    }
+
+    .about-features img {
+      max-width: 250px; /* Ensure images don't get too big */
+    }
+
+    #closeSplash {
+      font-size: 14px; /* Smaller button text on small screens */
+      padding: 8px 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .splash-content {
+      width: 90%; /* Even wider on very small screens */
+    }
+
+    .ad-title {
+      font-size: 22px; /* Further reduce font size */
+    }
+
+    .about-features img {
+      max-width: 200px; /* Scale down images on very small screens */
+    }
+
+    #closeSplash {
+      font-size: 13px; /* Further reduce button text size */
+      padding: 6px 14px;
+    }
+  }
 </style>
- <script>
+
+<script>
 // Auto-close after 5 seconds (change time if needed)
-let autoCloseTime = 5000; 
+let autoCloseTime = 5000;
 
 let splash = document.getElementById("splash");
 let closeBtn = document.getElementById("closeSplash");
 
 let timer = setTimeout(() => {
-    splash.style.display = "none";
+  splash.style.display = "none";
 }, autoCloseTime);
 
 // Manual close
 closeBtn.onclick = () => {
-    clearTimeout(timer);
-    splash.style.display = "none";
+  clearTimeout(timer);
+  splash.style.display = "none";
 };
 </script>
 
